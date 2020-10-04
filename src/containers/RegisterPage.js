@@ -7,12 +7,11 @@ import { authActions, routeActions } from "redux/actions";
 
 const RegisterPage = () => {
   const [formData, setFormData] = useState({
-    name: "Minh",
-    email: "minhdo@gmail.com",
-    password: "123",
-    password2: "123",
-    avatarUrl:
-      "https://lh3.googleusercontent.com/a-/AOh14GhnQ6aJ2YnaevyJzhii-qGws6Y17w-cwWLqF5iP",
+    name: "",
+    email: "",
+    password: "",
+    password2: "",
+    avatarUrl:"",
   });
   const [errors, setErrors] = useState({
     name: "",
