@@ -1,7 +1,5 @@
-import * as type from "redux/constants/auth.constants"
-import api from "redux/api"
-import {toast} from "react-toastify"
+import * as types from "redux/constants/user.constants";
+import api from "../reducers/api";
+import { toast } from "react-toastify";
 
-export const userActions={
-
-};
+export const userActions = {};
