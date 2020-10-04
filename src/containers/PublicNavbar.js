@@ -2,15 +2,18 @@ import React from "react";
 import { Navbar, Nav } from "react-bootstrap";
 import { Link } from "react-router-dom";
 import logo from "images/logo.svg";
-import { useSelector } from "react-redux";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 
+import { useDispatch, useSelector } from "react-redux";
+import { authActions } from "redux/actions";
 const PublicNavbar = () => {
   const isAuthenticated = useSelector((state) => state.auth.isAuthenticated);
   const loading = useSelector((state) => state.auth.loading);
 
-  const handleLogout = () => {};
-
+  const dispatch = useDispatch();
+  const handleLogout = () => {
+    dispatch(authActions.logout());
+  };
   const authLinks = (
     <Nav>
       <Nav.Link as={Link} to="/admin/profile">
