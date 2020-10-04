@@ -32,7 +32,7 @@ api.interceptors.response.use(
             errorMsg=errorMsg+":"+error.errors.message;
         }
         toast.error(errorMsg);
-        return Promise.reject(rrror)
+        return Promise.reject(error)
     }
 )
 export default api;
