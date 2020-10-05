@@ -9,6 +9,7 @@ import { blogActions } from "redux/actions";
 import ReviewList from "components/ReviewList";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import ReviewForm from "../components/ReviewForm";
+import ReactionList from "../components/ReactionList";
 
 const BlogDetailPage = () => {
   const [text, setText] = useState("");
@@ -28,6 +29,9 @@ const BlogDetailPage = () => {
 
   const handleGoBackClick = (e) => {
     history.goBack();
+  };
+  const handleEmojiClick = (targetType, targetId, emoji) => {
+    dispatch(blogActions.sendReaction(targetType, targetId, emoji));
   };
   const handleInputChange = (e) => {
     setText(e.target.value);
@@ -70,8 +74,20 @@ const BlogDetailPage = () => {
               </span>
               <hr />
               <Markdown source={blog.content} />
+              <ReactionList
+                reactionsData={blog.reactions}
+                targetType="Blog"
+                targetId={blog._id}
+                handleEmojiClick={handleEmojiClick}
+                loading={loading}
+                size="lg"
+              />
               <hr />
-              <ReviewList reviews={blog.reviews} />
+              <ReviewList
+                reviews={blog.reviews}
+                handleEmojiClick={handleEmojiClick}
+                loading={loading}
+              />
             </div>
           )}
           {logined && (

@@ -39,6 +39,31 @@ const blogReducer = (state = initialState, action) => {
       };
     case types.GET_BLOGS_FAILURE:
       return { ...state, loading: false };
+    case types.REACTION_REQUEST:
+      return { ...state, loading: true };
+    case types.REACTION_FAILURE:
+      return { ...state, loading: false };
+    case types.BLOG_REACTION_SUCCESS:
+      return {
+        ...state,
+        selectedBlog: { ...state.selectedBlog, reactions: payload },
+        submitLoading: false
+      };
+    case types.REVIEW_REACTION_SUCCESS:
+      return {
+        ...state,
+        loading: false,
+        selectedBlog: {
+          ...state.selectedBlog,
+          reviews: [
+            ...state.selectedBlog.reviews.map((review) => {
+              if (review.id !== payload.reviewId) return review;
+              return { ...review, reactions: payload.reactions };
+            })
+          ]
+        }
+      };
+
     default:
       return state;
   }

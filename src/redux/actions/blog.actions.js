@@ -58,9 +58,31 @@ const createReview = (blogId, content) => async (dispatch) => {
     dispatch({ type: types.POST_REVIEW_FAILURE, payload: err });
   }
 };
+const sendReaction = (targetType, targetId, emoji) => async (dispatch) => {
+  dispatch({ type: types.REACTION_REQUEST, payload: null });
+  try {
+    const res = await api.post(`/reactions`, { targetType, targetId, emoji });
+    if (targetType === "Blog") {
+      dispatch({
+        type: types.BLOG_REACTION_SUCCESS,
+        payload: res.data.data
+      });
+    } else if (targetType === "Review") {
+      dispatch({
+        type: types.REVIEW_REACTION_SUCCESS,
+        payload: res.data.data
+      });
+      console.log("Reaction-data", res.data);
+    }
+  } catch (err) {
+    console.log("err", err);
+    dispatch({ type: types.REACTION_FAILURE, payload: err });
+  }
+};
 
 export const blogActions = {
   blogsRequest,
   getSingleBlog,
-  createReview
+  createReview,
+  sendReaction
 };
