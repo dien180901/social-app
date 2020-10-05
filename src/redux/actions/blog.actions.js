@@ -66,9 +66,8 @@ const sendReaction = (targetType, targetId, emoji) => async (dispatch) => {
     } else if (targetType === "Review") {
       dispatch({
         type: types.REVIEW_REACTION_SUCCESS,
-        payload: res.data.data
+        payload: { reviewId: targetId, reactions: res.data.data }
       });
-      console.log("Reaction-data", res.data);
     }
   } catch (err) {
     console.log("err", err);

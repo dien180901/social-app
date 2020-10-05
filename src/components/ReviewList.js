@@ -31,13 +31,13 @@ const ReviewContent = ({ review, handleEmojiClick, loading }) => {
       <span className="comment_date">
         <Moment fromNow>{review?.createdAt}</Moment>
       </span>
+      {console.log("review.reactions", review.reactions)}
       <ReactionList
         reactionsData={review.reactions}
         targetType="Review"
         targetId={review._id}
         handleEmojiClick={handleEmojiClick}
         loading={loading}
-        size="xs"
       />
     </div>
   );

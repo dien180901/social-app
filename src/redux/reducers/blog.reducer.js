@@ -47,9 +47,11 @@ const blogReducer = (state = initialState, action) => {
       return {
         ...state,
         selectedBlog: { ...state.selectedBlog, reactions: payload },
-        submitLoading: false
+        loading: false
       };
     case types.REVIEW_REACTION_SUCCESS:
+      console.log("selectedBlog for Review", payload);
+      console.log(state.selectedBlog);
       return {
         ...state,
         loading: false,
@@ -57,7 +59,7 @@ const blogReducer = (state = initialState, action) => {
           ...state.selectedBlog,
           reviews: [
             ...state.selectedBlog.reviews.map((review) => {
-              if (review.id !== payload.reviewId) return review;
+              if (review._id !== payload.reviewId) return review;
               return { ...review, reactions: payload.reactions };
             })
           ]
