@@ -1,6 +1,6 @@
-import * as types from "redux/constants/blog.constants";
-import api from "../reducers/api";
-import { toast } from "react-toastify";
+// import * as types from "redux/constants/blog.constants";
+// import api from "../reducers/api";
+// import { toast } from "react-toastify";
 
 // const blogsRequest=(pageNum=1,limit)=>async(dispatch)=>{
 //     dispatch({type:types.GET_BLOGS_REQUEST,payload:null})
@@ -19,6 +19,8 @@ import { toast } from "react-toastify";
 import * as types from "redux/constants/blog.constants";
 import api from "../reducers/api";
 import { toast } from "react-toastify";
+import { connect } from "react-redux";
+
 const blogsRequest = (pageNum = 1, limit = 10) => async (dispatch) => {
   dispatch({ type: types.GET_BLOGS_REQUEST, payload: null });
   try {
@@ -43,7 +45,22 @@ const getSingleBlog = (blogId) => async (dispatch) => {
   }
 };
 
+const createReview = (blogId, content) => async (dispatch) => {
+  dispatch({ type: types.POST_REVIEW_REQUEST, payload: null });
+  try {
+    const res = await api.post(`reviews/blogs/${blogId}`, { content: content });
+    dispatch({
+      type: types.POST_REVIEW_SUCCESS,
+      payload: res.data.data
+    });
+  } catch (err) {
+    console.log(err.messages);
+    dispatch({ type: types.POST_REVIEW_FAILURE, payload: err });
+  }
+};
+
 export const blogActions = {
   blogsRequest,
-  getSingleBlog
+  getSingleBlog,
+  createReview
 };

@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import { Button } from "react-bootstrap";
 import { useDispatch, useSelector } from "react-redux";
 import { useParams, useHistory, Link } from "react-router-dom";
@@ -8,8 +8,11 @@ import Markdown from "react-markdown";
 import { blogActions } from "redux/actions";
 import ReviewList from "components/ReviewList";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import ReviewForm from "../components/ReviewForm";
 
 const BlogDetailPage = () => {
+  const [text, setText] = useState("");
+  const logined = useSelector((state) => state.auth.isAuthenticated);
   const params = useParams();
   const dispatch = useDispatch();
   const blog = useSelector((state) => state.blog.selectedBlog);
@@ -18,13 +21,21 @@ const BlogDetailPage = () => {
   const history = useHistory();
 
   useEffect(() => {
-    if (params?.id) {
+    if (params.id) {
       dispatch(blogActions.getSingleBlog(params.id));
     }
   }, [dispatch, params]);
 
   const handleGoBackClick = (e) => {
     history.goBack();
+  };
+  const handleInputChange = (e) => {
+    setText(e.target.value);
+  };
+  const handleSubmitReview = (e) => {
+    e.preventDefault();
+    dispatch(blogActions.createReview(params.id, text));
+    setText("");
   };
 
   return (
@@ -62,6 +73,14 @@ const BlogDetailPage = () => {
               <hr />
               <ReviewList reviews={blog.reviews} />
             </div>
+          )}
+          {logined && (
+            <ReviewForm
+              reviewText={text}
+              handleInputChange={handleInputChange}
+              handleSubmitReview={handleSubmitReview}
+              loading={loading}
+            />
           )}
         </>
       )}
