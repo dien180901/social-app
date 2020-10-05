@@ -1,10 +1,3 @@
-<<<<<<< HEAD
-=======
-// import * as types from "redux/constants/blog.constants";
-// import api from "../reducers/api";
-// import { toast } from "react-toastify";
->>>>>>> 4a223c19fb5427a534b63b587de571d2e5df1506
-
 // const blogsRequest=(pageNum=1,limit)=>async(dispatch)=>{
 //     dispatch({type:types.GET_BLOGS_REQUEST,payload:null})
 //     try{
