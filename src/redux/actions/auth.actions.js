@@ -30,9 +30,23 @@ const loginRequest = (email, password) => async (dispatch) => {
     localStorage.setItem("accessToken", "");
     dispatch({ type: types.LOGOUT, payload: null });
   };
+  const getCurrentUser = (accessToken) => async (dispatch) => {
+    dispatch({ type: types.GET_CURRENT_USER_REQUEST, payload: null });
+    if (accessToken) {
+      const bearerToken = "Bearer " + accessToken;
+      api.defaults.headers.common["authorization"] = bearerToken;
+    }
+    try {
+      const res = await api.get("/users/me");
+      dispatch({ type: types.GET_CURRENT_USER_SUCCESS, payload: res.data.data });
+    } catch (error) {
+      dispatch({ type: types.GET_CURRENT_USER_FAILURE, payload: error });
+    }
+  };
   
 export const authActions = {
   register,
   loginRequest,
   logout,
+  getCurrentUser,
 };
